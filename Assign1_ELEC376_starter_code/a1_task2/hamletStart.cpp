@@ -1,3 +1,11 @@
+/* The program allows users to find and report the frequency 
+ * of a specific word within the text of "Hamlet." 
+ * The program prompts the user to enter a word, 
+ * reads the text from the "hamlet.txt" file, and searches
+ * for occurrences of the word within the words of the text. 
+ * It then displays the total number of words searched and the count 
+ * of how many times the word was found within those words. */
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -17,7 +25,7 @@ string cleanWord(const string &word) {
     //storing the word length in an int variable
     int len = word.length();
     
-    //loopig through each character in the word
+    //looping through each character in the word
     for (int i = 0; i < len; ++i) {
 
         char ch = word[i];
@@ -66,7 +74,6 @@ int wordOccurrence(ifstream &file, const string &searchingWord, int &totalWords)
         //if the cleaned word contains a hyphen, we will split it and check both parts
         int hyphenPos = cleanedWord.find('-');
 
-        //if the 
         if (hyphenPos != string::npos) {
             
             //since the hyphen is found, the word will be split into two parts
@@ -83,6 +90,8 @@ int wordOccurrence(ifstream &file, const string &searchingWord, int &totalWords)
             //if either of the first part or second part of the word, matches the searched word then...
             if (firstPart == cleanedSearchWord || secondPart == cleanedSearchWord) {
 
+                cout << "Matched word: " << word << endl;
+                
                 //the number of occurences will be incremented
                 occurrences++;
             }
@@ -93,6 +102,8 @@ int wordOccurrence(ifstream &file, const string &searchingWord, int &totalWords)
 
             //if the cleaned word is the same as the cleaned search word, then...
             if (cleanedWord == cleanedSearchWord) {
+
+                cout << "Matched word: " << word << endl;
 
                 //the number of occurences is incremented
                 occurrences++;
@@ -107,17 +118,17 @@ int wordOccurrence(ifstream &file, const string &searchingWord, int &totalWords)
 int main() {
 
     string word;
-    string filePath = "hamlet.txt"; // Hardcoded file name
+    string filePath = "hamlet.txt"; 
 
     cout << "Hi there! This outputs the number of times" << endl
          << "a word appears in Hamlet by William Shakespeare." << endl;
     cout << "Please enter the word to search for:" << endl;
     cin >> word;
 
-    // Opening the file hamlet.txt
+    //opening the file hamlet.txt
     ifstream inFile(filePath);
 
-    // Checking if the file has been properly opened 
+    //checking if the file has been properly opened 
     if (!inFile) {
         cerr << "The file hamlet.txt cannot be opened." << endl;
         return 1;
@@ -125,13 +136,13 @@ int main() {
 
     int totalWords = 0;
 
-    // Finding the number of occurrences by calling the function on the word
+    //finding the number of occurrences by calling the function on the word
     int occurrences = wordOccurrence(inFile, word, totalWords);
 
-    // Closing the file
+    //closing the file
     inFile.close();
 
-    // Outputting the final message
+    //outputting the final message
     cout << totalWords << " words were searched and the word \"" << word << "\" was found " << occurrences << " times." << endl;
 
     return 0;
